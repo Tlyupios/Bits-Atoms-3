@@ -1,82 +1,57 @@
-console.log('Loading data...');
 
-let table;
-
-const canvasWidth = window.innerWidth;
-const canvasHeight = 6000; // ⚠️ size limit if too long
-const xPosAxis1 = 20; // px
-const xPosAxis2 = 500; // px
-
-// https://p5js.org/reference/#/p5/loadTable
 function preload() {
-  table = loadTable('future_cities_data_truncated.csv', 'csv', 'header');
+    table = loadTable('Data/future_cities_data_truncated.csv', 'csv', 'header');
 }
 
 function setup() {
-  createCanvas(canvasWidth, canvasHeight);
+    createCanvas(windowWidth, windowHeight);
+    background(245);
+    noStroke();
 
-  const barMargin = 10;
-  const barHeight = 30;
-
-  // count the columns
-  print(table.getRowCount() + ' total rows in table');
-  print(table.getColumnCount() + ' total columns in table');
-  print('All cities:', table.getColumn('current_city'));
-
-  for (let i = 0; i < table.getRowCount(); i++) {
-    const city = table.get(i, 'current_city');
-    const meanTemp = table.get(i, 'Annual_Mean_Temperature');
-    const futureMeanTemp = table.get(i, 'future_Annual_Mean_Temperature');
-
-    const yPosition = convertDegreesToPosition(meanTemp);
-    const xPosition = xPosAxis1;
-    drawTemperature(xPosition, yPosition);
-    //drawLabelToday(yPosition, city, meanTemp);
-    drawLabel(yPosition, city, futureMeanTemp, xPosition);
+    // count the columns
+    print(table.getRowCount() + ' total rows in table');
+    print(table.getColumnCount() + ' total columns in table');
+    print('All cities:', table.getColumn('current_city'));
 
 
-    const futureYPosition = convertDegreesToPosition(futureMeanTemp);
-    const futureXPosition = xPosAxis2;
-    drawTemperature(futureXPosition, futureYPosition);
-    //drawLabelFuture(futureYPosition, city, futureMeanTemp);
-    drawLabel(futureYPosition, city, futureMeanTemp, futureXPosition);
 
+    for (let i = 0; i < table.getRowCount(); i++) {
+        const city = table.get(i, 'current_city');
+        const meanTemp = round(table.get(i, 'Annual_Mean_Temperature'), 1);
+        const futureMeanTemp = round(table.get(i, 'future_Annual_Mean_Temperature'),1);
 
-    drawConnectingLine(yPosition, futureYPosition);
-  }
+        const futureYPosition = convertDegreesToPosition(futureMeanTemp);
+        const futureXPosition = 80+i * 100;
+        fill('red');
+        rect(futureXPosition, 410, 40, futureYPosition, 0, 0, 10, 10);
 
-  // drawAxes();
-  // drawAxesLabels();
+        const YPosition = convertDegreesToPosition(meanTemp);
+        const XPosition = 40+i * 100;
+        fill('blue');
+        rect(XPosition, 410, 40, YPosition, 0, 0, 10, 10);
+        //cnv.mouseOver(temperaturelabel);
+
+        const label = `${city}`;
+        fill('black');
+        textAlign(CENTER);
+        text(label, 40+XPosition, 440);
+
+        const meanTemplabel = `${meanTemp}°C`;
+        fill('blue');
+        text(meanTemplabel, 40+XPosition, 460);
+        
+        const futureTemplabel = `${futureMeanTemp}°C`;
+        fill('red');
+        text(futureTemplabel, 40+XPosition, 480);
+
+        
+    }
 }
 
 function convertDegreesToPosition(temp) {
-  // we need to map the temperatures to a new scale
-  // 0° = 600px, 25° = 300px, 20° = 30px
-  // https://p5js.org/reference/#/p5/map
-  const position = map(temp, 0, 20, 600, 30);
-  return position;
-}
-
-function drawTemperature(x, y) {
-  fill('black');
-  circle(x, y, 10);
-}
-
-// Task: Can you combine the two functions
-// "drawLabelToday" and "drawLabelFuture"
-// into one, using a fourth parameter?
-function drawLabel(yPos, city, temp, xPos) {
-  fill('black');
-  const label = `${city}: ${temp}°C`;
-  text(label, xPos + 10, yPos + 5);
-}
-
-/*function drawLabelFuture(pos, city, temp) {
-  fill('black');
-  const label = `${city}: ${temp}°C`;
-  text(label, xPosAxis2 + 10, pos + 5);
-}*/
-
-function drawConnectingLine(y1, y2) {
-  line(xPosAxis1, y1, xPosAxis2, y2);
+    // we need to map the temperatures to a new scale
+    // 0° = 600px, 25° = 300px, 20° = 30px
+    // https://p5js.org/reference/#/p5/map
+    const position = map(temp, 5, 20.366666, -30, -400);
+    return position;
 }
