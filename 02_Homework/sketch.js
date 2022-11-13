@@ -10,36 +10,26 @@ let ColorHot;
 
 function preload() {
     table = loadTable('Data/future_cities_data_truncated.csv', 'csv', 'header');
-    imgCold = loadImage('example.png');
-    imgHot = loadImage('examplehot.png');
 }
+
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
     background(245);
     noStroke();
-
     angleMode(DEGREES);
+    NextCityButton()
 
     // count the columns
     print(table.getRowCount() + ' total rows in table');
     print(table.getColumnCount() + ' total columns in table');
     print('All cities:', table.getColumn('current_city'));
 
-    button = createButton('Next City');
-    button.position(20, 20);
-    button.mouseClicked(Click);
-    button.style('font-size', '25px')
-    button.style('padding', '15px')
-    button.style('background-color', 'black')
-    button.style('color', 'white')
-    button.style('border', 'none')
-    button.style('border-radius', '10px')
+
+    ColorCold = color(0, 150, 255);
+    ColorHot = color(255, 50, 30);
 
     OneStep = (360 / table.getRowCount());
-
-    ColorCold = color(0,150,255);
-    ColorHot = color(255, 70, 255);
 }
 
 function draw() {
@@ -47,19 +37,18 @@ function draw() {
     background(0);
 
     fill(ColorCold);
-    rect(20, 140, 10, 10, 2);
-    let today = 'Temperature from 2020';
-    text(today, 35, 150);
+    rect(200, 22, 10, 10, 2);
+    let today = 'Average temperature 2020';
+    text(today, 220, 32);
 
     fill(ColorHot);
-    rect(20, 160, 10, 10, 2);
-    let future = 'Temperature from 2050';
-    text(future, 35, 170);
+    rect(380, 22, 10, 10, 2);
+    let future = 'Average temperature 2050';
+    text(future, 400, 32);
 
     push();
     translate(width / 2, height / 1);
     rotate(rotateAnimation);
-    //rotate(val);
     Data();
 
     fill('black');
@@ -67,30 +56,34 @@ function draw() {
     noFill();
     strokeWeight(4);
     stroke(255);
-    for (let i =0; i <= 2; i = i + 0.4)
-    circle(0, 0, DataRadius * i + 10);
+    for (let i = 0; i <= 2; i = i + 0.4)
+        circle(0, 0, DataRadius * i + 10);
     pop();
-
 }
 
 function Click() {
-
-    //rotateAnimation = rotateAnimation + OneStep;
-
     if (rotateAnimation <= 360 - OneStep) {
         rotateAnimation = rotateAnimation - OneStep;
     } else if (rotateAnimation >= 360 - OneStep) {
         rotateAnimation = 0;
     }
-
 }
 
 function convertDegreesToPosition(temp) {
-    // we need to map the temperatures to a new scale
-    // 0° = 600px, 25° = 300px, 20° = 30px
-    // https://p5js.org/reference/#/p5/map
     const position = map(temp, 5, 20.366666, 10, 250);
     return position;
+}
+
+function NextCityButton() {
+    button = createButton('Next City');
+    button.position(30, 20);
+    button.mouseClicked(Click);
+    button.style('font-size', '25px')
+    button.style('padding', '15px')
+    button.style('background-color', 'white')
+    button.style('color', 'black')
+    button.style('border', 'none')
+    button.style('border-radius', '10px')
 }
 
 function Data() {
@@ -102,21 +95,16 @@ function Data() {
         const rotationData = i * (OneStep);
 
         push();
-        noFill();
-        strokeWeight(4);
         rotate(rotationData);
         const futureYPosition = convertDegreesToPosition(futureMeanTemp);
         const futureXPosition = DataRadius;
-        //fill(255, 70, 0);
-        stroke(ColorHot);
-        image(imgHot, futureXPosition, 0, futureYPosition, RectWidth)
-        rect(futureXPosition, 2, futureYPosition, RectWidth, 0, 0, 0, 0);
+        fill(ColorHot);
+        rect(futureXPosition, 2, futureYPosition, RectWidth, 0, 10, 10, 0);
 
         const YPosition = convertDegreesToPosition(meanTemp);
         const XPosition = DataRadius;
-        stroke(ColorCold);
-        image(imgCold, XPosition, -RectWidth, YPosition, RectWidth)
-        rect(XPosition, -RectWidth-2, YPosition, RectWidth, 0, 0, 0, 0);
+        fill(ColorCold);
+        rect(XPosition, -RectWidth - 2, YPosition, RectWidth, 0, 10, 10, 0);
         pop();
 
         //////////////////////////////////////////////////////////////
