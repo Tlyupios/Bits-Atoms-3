@@ -78,12 +78,13 @@ function NextCityButton() {
     button = createButton('Next City');
     button.position(30, 20);
     button.mouseClicked(Click);
-    button.style('font-size', '25px')
-    button.style('padding', '15px')
-    button.style('background-color', 'white')
-    button.style('color', 'black')
-    button.style('border', 'none')
-    button.style('border-radius', '10px')
+    button.style('font-size', '25px');
+    button.style('padding', '15px');
+    button.style('background-color', 'white');
+    button.style('color', 'black');
+    button.style('border', 'none');
+    button.style('border-radius', '10px');
+    button.style('cursor', 'pointer');
 }
 
 function Data() {
