@@ -62,11 +62,14 @@ function draw() {
 }
 
 function Click() {
-    if (rotateAnimation <= 360 - OneStep) {
-        rotateAnimation = rotateAnimation - OneStep;
-    } else if (rotateAnimation >= 360 - OneStep) {
-        rotateAnimation = 0;
-    }
+
+    rotateAnimation = rotateAnimation - OneStep;
+
+    // if (rotateAnimation <= 360 - OneStep) {
+    //     rotateAnimation = rotateAnimation - OneStep;
+    // } else if (rotateAnimation >= 360 - OneStep) {
+    //     rotateAnimation = 0;
+    // }
 }
 
 function convertDegreesToPosition(temp) {
