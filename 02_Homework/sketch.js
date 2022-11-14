@@ -1,6 +1,6 @@
 let RectWidth = 50;
 let DataRadius = 230;
-let rotateAnimation = 0;
+let rotateData = 0;
 let slider;
 let OneStep;
 let button;
@@ -34,6 +34,7 @@ function setup() {
 
 function draw() {
     createCanvas(windowWidth, windowHeight);
+    //NextCityButton()
 
     background(0);
 
@@ -49,7 +50,7 @@ function draw() {
 
     push();
     translate(width / 2, height / 1);
-    rotate(rotateAnimation);
+    rotate(rotateData);
     Data();
 
     fill('black');
@@ -64,13 +65,8 @@ function draw() {
 
 function Click() {
 
-    rotateAnimation = rotateAnimation - OneStep;
+    rotateData = rotateData - OneStep;
 
-    // if (rotateAnimation <= 360 - OneStep) {
-    //     rotateAnimation = rotateAnimation - OneStep;
-    // } else if (rotateAnimation >= 360 - OneStep) {
-    //     rotateAnimation = 0;
-    // }
 }
 
 function convertDegreesToPosition(temp) {
@@ -146,6 +142,5 @@ function Data() {
         textSize(80);
         text(label, 0, 100);
         pop();
-
     }
 }
