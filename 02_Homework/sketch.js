@@ -34,7 +34,6 @@ function setup() {
 
 function draw() {
     createCanvas(windowWidth, windowHeight);
-    //NextCityButton()
 
     background(0);
 
