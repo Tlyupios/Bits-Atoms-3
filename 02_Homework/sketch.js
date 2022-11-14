@@ -1,5 +1,5 @@
 let RectWidth = 50;
-let DataRadius = 250;
+let DataRadius = 230;
 let rotateAnimation = 0;
 let slider;
 let OneStep;
@@ -33,6 +33,7 @@ function setup() {
 }
 
 function draw() {
+    createCanvas(windowWidth, windowHeight);
 
     background(0);
 
@@ -56,7 +57,7 @@ function draw() {
     noFill();
     strokeWeight(4);
     stroke(255);
-    for (let i = 0; i <= 2; i = i + 0.4)
+    for (let i = 0; i <= 2; i = i + 0.5)
         circle(0, 0, DataRadius * i + 10);
     pop();
 }
@@ -73,7 +74,7 @@ function Click() {
 }
 
 function convertDegreesToPosition(temp) {
-    const position = map(temp, 5, 20.366666, 10, 250);
+    const position = map(temp, 5, 20.366666, 10, 280);
     return position;
 }
 
