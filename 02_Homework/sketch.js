@@ -33,7 +33,6 @@ function setup() {
 }
 
 function draw() {
-    createCanvas(windowWidth, windowHeight);
 
     background(0);
 
@@ -143,3 +142,7 @@ function Data() {
         pop();
     }
 }
+
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+  }
